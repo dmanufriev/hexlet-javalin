@@ -2,6 +2,7 @@ package org.example.hexlet;
 
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinJte;
+import org.example.hexlet.dto.MainPage;
 import org.example.hexlet.dto.courses.CoursePage;
 import org.example.hexlet.model.Course;
 
@@ -23,10 +24,17 @@ public class HelloWorld {
         });
 
         // Описываем, что загрузится по адресу /
+        app.get("/", ctx -> {
+            //var visited = Boolean.valueOf(ctx.cookie("visited"));
+            var page = new MainPage(false, ctx.sessionAttribute("currentUser"));
+            ctx.render("index.jte", model("page", page));
+            //ctx.cookie("visited", String.valueOf(true));
+        });
+
         app.get("/courses", ctx -> {
             var header = "Programming courses";
             var page = new CoursePage(courses, header);
-            ctx.render("index.jte", model("page", page));
+            ctx.render("courses/index.jte", model("page", page));
         });
 
         app.get("/courses/{id}", ctx -> {

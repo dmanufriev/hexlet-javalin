@@ -1,22 +1,15 @@
-@import org.example.hexlet.dto.courses.CoursePage
-@param CoursePage page
+@import org.example.hexlet.dto.MainPage
+@param MainPage page
 
-
-<html>
-    <head>
-        <title>Hexlet</title>
-    </head>
-    <body>
-        <h1>${page.getHeader()}</h1>
-        @if(page.getCourses().isEmpty())
-            <p>No courses found</p>
-        @else
-            @for(var course : page.getCourses())
-                <div>
-                    <h2><a href="/courses/${course.getId()}">${course.getName()}</a></h2>
-                    <p>${course.getDescription()}</p>
-                </div>
-            @endfor
-        @endif
-    </body>
-</html>
+@template.layout.page(
+content = @`
+    <h1 class="text-body-emphasis">Hi Hexlet!</h1>
+    <p>Javalin + jte</p>
+    @if(!page.isVisited())
+        This message is showed just once. To see it again, remove cookies
+    @endif
+    @if(page.getCurrentUser() != null)
+        Welcome, ${page.getCurrentUser()}. if you want to sign out remove cookie called JSESSIONID
+    @endif
+`
+)
