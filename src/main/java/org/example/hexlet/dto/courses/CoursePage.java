@@ -1,22 +1,14 @@
 package org.example.hexlet.dto.courses;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.example.hexlet.model.Course;
 import java.util.List;
 
+@AllArgsConstructor
+@Getter
 public final class CoursePage {
     private List<Course> courses;
     private String header;
-
-    public CoursePage(List<Course> courses, String header) {
-        this.courses = courses;
-        this.header = header;
-    }
-
-    public List<Course> getCourses() {
-        return courses;
-    }
-
-    public String getHeader() {
-        return header;
-    }
+    private String term;
 }

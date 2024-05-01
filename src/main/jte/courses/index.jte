@@ -5,6 +5,13 @@
 @template.layout.page(
 content = @`
     <h1>${page.getHeader()}</h1>
+    <form action="/courses" method="get">
+        <input type="search" name="term" value="${page.getTerm()}" />
+        <input type="date" name="date" />
+        <input type="time" name="time" />
+        <input type="datetime-local" name="dateTime" />
+        <input type="submit" value="Search" />
+    </form>
     @if(page.getCourses().isEmpty())
         <p>No courses found</p>
     @else

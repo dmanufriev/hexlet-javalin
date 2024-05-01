@@ -33,7 +33,14 @@ public class HelloWorld {
 
         app.get("/courses", ctx -> {
             var header = "Programming courses";
-            var page = new CoursePage(courses, header);
+            var term = ctx.queryParam("term");
+            List<Course> coursesList = courses;
+            if (term != null) {
+                coursesList = courses.stream()
+                                    .filter(course -> course.getName().toLowerCase().contains(term.toLowerCase()))
+                                    .toList();
+            }
+            var page = new CoursePage(coursesList, header, term);
             ctx.render("courses/index.jte", model("page", page));
         });
 
