@@ -3,7 +3,11 @@
 
 @template.layout.page(
     content = @`
-        <h1>${course.getName()}</h1>
-        <p>${course.getDescription()}</p>
+        @if (course == null)
+            <p>Курс не найден</p>
+        @else
+            <h1>${course.getName()}</h1>
+            <p>${course.getDescription()}</p>
+        @endif
     `
 )

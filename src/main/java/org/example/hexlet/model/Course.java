@@ -6,9 +6,13 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 public final class Course {
-    private int id;
+    private Integer id;
     private String name;
     private String description;
+
+    public Course(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 }

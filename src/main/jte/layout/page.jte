@@ -16,7 +16,7 @@
         <div class="menu">
             <p>
                 <a href="${NamedRoutes.mainPath()}">Main</a>
-                <!--<a href="${NamedRoutes.usersPath()}">Users</a>-->
+                <a href="${NamedRoutes.usersPath()}">Users</a>
                 <a href="${NamedRoutes.coursesPath()}">Courses</a>
                 <!--<a href="${NamedRoutes.buildSessionPath()}">Sign in</a>-->
             </p>
