@@ -1,6 +1,6 @@
 @import org.example.hexlet.util.NamedRoutes
-@import org.example.hexlet.dto.courses.CoursePage
-@param CoursePage page
+@import org.example.hexlet.dto.courses.CoursesPage
+@param CoursesPage page
 
 @template.layout.page(
 content = @`
