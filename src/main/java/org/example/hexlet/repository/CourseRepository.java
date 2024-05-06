@@ -1,7 +1,6 @@
 package org.example.hexlet.repository;
 
 import org.example.hexlet.model.Course;
-import org.example.hexlet.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +10,7 @@ public class CourseRepository {
     private static List<Course> entities = new ArrayList<>();
 
     public static void save(Course course) {
-        course.setId(entities.size() + 1);
+        course.setId((long)entities.size() + 1);
         entities.add(course);
     }
 
@@ -27,7 +26,7 @@ public class CourseRepository {
         return courses;
     }
 
-    public static Optional<Course> find(Integer id) {
+    public static Optional<Course> find(Long id) {
         var course = entities.stream()
                 .filter(entity -> entity.getId().equals(id))
                 .findAny();

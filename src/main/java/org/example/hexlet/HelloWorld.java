@@ -35,7 +35,7 @@ public class HelloWorld {
     }
 
     private static void rootHandler() {
-        app.get("/", ctx -> {
+        app.get(NamedRoutes.mainPath(), ctx -> {
             //var visited = Boolean.valueOf(ctx.cookie("visited"));
             var page = new MainPage(false, ctx.sessionAttribute("currentUser"));
             ctx.render("index.jte", model("page", page));
@@ -44,7 +44,7 @@ public class HelloWorld {
     }
 
     private static void coursesHandler() {
-        app.get("/courses", ctx -> {
+        app.get(NamedRoutes.coursesPath(), ctx -> {
             var header = "Programming courses";
             var term = ctx.queryParam("term");
             var coursesList = CourseRepository.search(term);
@@ -52,12 +52,12 @@ public class HelloWorld {
             ctx.render("courses/index.jte", model("page", page));
         });
 
-        app.get("/courses/build", ctx -> {
+        app.get(NamedRoutes.buildCoursePath(), ctx -> {
             var page = new BuildCoursePage();
             ctx.render("courses/build.jte", model("page", page));
         });
 
-        app.post("/courses", ctx -> {
+        app.post(NamedRoutes.coursesPath(), ctx -> {
             try {
                 var name = ctx.formParamAsClass("name", String.class)
                         .check(value -> value.length() > 2, "Имя должно быть длиннее 2")
@@ -74,8 +74,8 @@ public class HelloWorld {
             }
         });
 
-        app.get("/courses/{id}", ctx -> {
-            var id = ctx.pathParamAsClass("id", Integer.class).get();
+        app.get(NamedRoutes.coursePath("{id}"), ctx -> {
+            var id = ctx.pathParamAsClass("id", Long.class).get();
             var course = CourseRepository.find(id).get();
             ctx.render("courses/course.jte", model("course", course));
         });

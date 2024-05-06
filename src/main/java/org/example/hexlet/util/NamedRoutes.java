@@ -8,6 +8,8 @@ public class NamedRoutes {
     public static String mainPath() {
         return "/";
     }
+
+    // Sessions
     public static String sessionsPath() {
         return "/sessions";
     }
@@ -16,6 +18,7 @@ public class NamedRoutes {
         return "/sessions/build";
     }
 
+    // Users
     public static String usersPath() {
         return "/users";
     }
@@ -32,6 +35,7 @@ public class NamedRoutes {
         return "/users/build";
     }
 
+    // Courses
     public static String buildCoursePath() {
         return "/courses/build";
     }
@@ -48,6 +52,7 @@ public class NamedRoutes {
         return "/courses/" + id;
     }
 
+    // Github
     public static String githubPath() {
         return "https://github.com/dmanufriev";
     }
