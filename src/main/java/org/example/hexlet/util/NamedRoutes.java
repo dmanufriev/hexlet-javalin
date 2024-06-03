@@ -31,8 +31,6 @@ public class NamedRoutes {
         return "/users/" + id;
     }
     public static String editUserPath(String id) { return userPath(id) + "/edit"; }
-    public static String updateUserPath(String id) { return userPath(id) + "/update"; }
-    public static String destroyUserPath(String id) { return userPath(id) + "/destroy"; }
 
     // Courses
     public static String buildCoursePath() {
@@ -48,8 +46,6 @@ public class NamedRoutes {
         return "/courses/" + id;
     }
     public static String editCoursePath(String id) { return coursePath(id) + "/edit"; }
-    public static String updateCoursePath(String id) { return coursePath(id) + "/update"; }
-    public static String destroyCoursePath(String id) { return coursePath(id) + "/destroy"; }
 
     // Github
     public static String githubPath() {

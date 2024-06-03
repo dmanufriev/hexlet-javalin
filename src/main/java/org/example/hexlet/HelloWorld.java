@@ -33,10 +33,10 @@ public class HelloWorld {
 
     private static void rootHandler() {
         app.get(NamedRoutes.mainPath(), ctx -> {
-            //var visited = Boolean.valueOf(ctx.cookie("visited"));
-            var page = new MainPage(false, ctx.sessionAttribute("currentUser"));
+            var visited = Boolean.valueOf(ctx.cookie("visited"));
+            var page = new MainPage(visited, ctx.sessionAttribute("currentUser"));
             ctx.render("index.jte", model("page", page));
-            //ctx.cookie("visited", String.valueOf(true));
+            ctx.cookie("visited", String.valueOf(true));
         });
     }
 
@@ -46,8 +46,8 @@ public class HelloWorld {
         app.post(NamedRoutes.coursesPath(), CoursesController::create);
         app.get(NamedRoutes.coursePath("{id}"), CoursesController::show);
         app.get(NamedRoutes.editCoursePath("{id}"), CoursesController::editForm);
-        app.patch(NamedRoutes.updateCoursePath("{id}"), CoursesController::update);
-        app.delete(NamedRoutes.destroyCoursePath("{id}"), CoursesController::destroy);
+        app.patch(NamedRoutes.coursePath("{id}"), CoursesController::update);
+        app.delete(NamedRoutes.coursePath("{id}"), CoursesController::destroy);
     }
 
     private static void usersHandler() {
@@ -56,7 +56,7 @@ public class HelloWorld {
         app.post(NamedRoutes.usersPath(), UsersController::create);
         app.get(NamedRoutes.userPath("{id}"), UsersController::show);
         app.get(NamedRoutes.editUserPath("{id}"), UsersController::editForm);
-        app.patch(NamedRoutes.updateUserPath("{id}"), UsersController::update);
-        app.delete(NamedRoutes.destroyUserPath("{id}"), UsersController::destroy);
+        app.patch(NamedRoutes.userPath("{id}"), UsersController::update);
+        app.delete(NamedRoutes.userPath("{id}"), UsersController::destroy);
     }
 }
