@@ -8,7 +8,9 @@ content = @`
         <ul>
             @for(var validator : page.getErrors().values())
                 @for(var error : validator)
-                    <li>${error.getMessage()}</li>
+                    <div class="alert alert-danger" role="alert">
+                        ${error.getMessage()}
+                    </div>
                 @endfor
             @endfor
         </ul>

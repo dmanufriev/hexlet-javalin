@@ -19,6 +19,8 @@ public class CoursesController {
         var term = ctx.queryParam("term");
         var coursesList = CourseRepository.search(term);
         var page = new CoursesPage(coursesList, header, term);
+        page.setFlash(ctx.consumeSessionAttribute("flash"));
+        page.setFlashStyle(ctx.consumeSessionAttribute("flashStyle"));
         ctx.render("courses/index.jte", model("page", page));
     }
 
@@ -46,6 +48,8 @@ public class CoursesController {
                     .get();
             var course = new Course(name, description);
             CourseRepository.save(course);
+            ctx.sessionAttribute("flash", "Курс \"" + name + "\" успешно создан!");
+            ctx.sessionAttribute("flashStyle", "alert-success");
             ctx.redirect(NamedRoutes.coursesPath());
         } catch (ValidationException e) {
             var page = new BuildCoursePage(ctx.formParam("name"), ctx.formParam("description"), e.getErrors());
