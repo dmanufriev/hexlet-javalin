@@ -10,6 +10,7 @@ import org.example.hexlet.dto.courses.BuildCoursePage;
 import org.example.hexlet.model.Course;
 import org.example.hexlet.repository.CourseRepository;
 import org.example.hexlet.util.NamedRoutes;
+import org.example.hexlet.controller.SessionsController;
 
 import static io.javalin.rendering.template.TemplateUtil.model;
 
@@ -27,6 +28,7 @@ public class HelloWorld {
         rootHandler();
         coursesHandler();
         usersHandler();
+        sessionsHandler();
 
         app.start(7070); // Стартуем веб-сервер
     }
@@ -58,5 +60,14 @@ public class HelloWorld {
         app.get(NamedRoutes.editUserPath("{id}"), UsersController::editForm);
         app.patch(NamedRoutes.userPath("{id}"), UsersController::update);
         app.delete(NamedRoutes.userPath("{id}"), UsersController::destroy);
+    }
+
+    private static void sessionsHandler() {
+        // Отображение формы логина
+        app.get(NamedRoutes.buildSessionPath(), SessionsController::build);
+        // Процесс логина
+        app.post(NamedRoutes.sessionsPath(), SessionsController::create);
+        // Процесс выхода из аккаунта
+        app.delete(NamedRoutes.sessionsPath(), SessionsController::destroy);
     }
 }
