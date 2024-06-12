@@ -1,5 +1,7 @@
 package org.example.hexlet;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinJte;
 import io.javalin.validation.ValidationException;
@@ -8,9 +10,14 @@ import org.example.hexlet.controller.UsersController;
 import org.example.hexlet.dto.MainPage;
 import org.example.hexlet.dto.courses.BuildCoursePage;
 import org.example.hexlet.model.Course;
+import org.example.hexlet.repository.BaseRepository;
 import org.example.hexlet.repository.CourseRepository;
 import org.example.hexlet.util.NamedRoutes;
 import org.example.hexlet.controller.SessionsController;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.stream.Collectors;
 
 import static io.javalin.rendering.template.TemplateUtil.model;
 
@@ -19,11 +26,12 @@ public class HelloWorld {
 
     public static void main(String[] args) {
 
-        // Создаем приложение
-        app = Javalin.create(config -> {
-            config.bundledPlugins.enableDevLogging();
-            config.fileRenderer(new JavalinJte());
-        });
+        try {
+            initApp();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return;
+        }
 
         rootHandler();
         coursesHandler();
@@ -31,6 +39,29 @@ public class HelloWorld {
         sessionsHandler();
 
         app.start(7070); // Стартуем веб-сервер
+    }
+    
+    private static void initApp() throws Exception {
+        var hikariConfig = new HikariConfig();
+        hikariConfig.setJdbcUrl("jdbc:h2:mem:hexlet_project;DB_CLOSE_DELAY=-1");
+
+        var dataSource = new HikariDataSource(hikariConfig);
+        // Получаем путь до файла в src/main/resources
+        var url = HelloWorld.class.getClassLoader().getResourceAsStream("schema.sql");
+        var sql = new BufferedReader(new InputStreamReader(url))
+                .lines().collect(Collectors.joining("\n"));
+
+        // Получаем соединение, создаем стейтмент и выполняем запрос
+        try (var connection = dataSource.getConnection();
+             var statement = connection.createStatement()) {
+            statement.execute(sql);
+        }
+        BaseRepository.dataSource = dataSource;
+
+        app = Javalin.create(config -> {
+            config.bundledPlugins.enableDevLogging();
+            config.fileRenderer(new JavalinJte());
+        });
     }
 
     private static void rootHandler() {

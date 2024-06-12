@@ -10,22 +10,23 @@ import org.example.hexlet.model.Course;
 import org.example.hexlet.repository.CourseRepository;
 import org.example.hexlet.util.NamedRoutes;
 
+import java.sql.SQLException;
+
 import static io.javalin.rendering.template.TemplateUtil.model;
 
 public class CoursesController {
     // Список курсов
-    public static void index (Context ctx) {
+    public static void index (Context ctx) throws SQLException {
         var header = "Programming courses";
-        var term = ctx.queryParam("term");
-        var coursesList = CourseRepository.search(term);
-        var page = new CoursesPage(coursesList, header, term);
+        var coursesList = CourseRepository.getEntities();
+        var page = new CoursesPage(coursesList, header, "");
         page.setFlash(ctx.consumeSessionAttribute("flash"));
         page.setFlashStyle(ctx.consumeSessionAttribute("flashStyle"));
         ctx.render("courses/index.jte", model("page", page));
     }
 
     // Страница курса
-    public static void show (Context ctx) {
+    public static void show (Context ctx) throws SQLException {
         var id = ctx.pathParamAsClass("id", Long.class).get();
         var course = CourseRepository.find(id).get();
         ctx.render("courses/show.jte", model("course", course));
@@ -38,7 +39,7 @@ public class CoursesController {
     }
 
     // Создание нового курса
-    public static void create (Context ctx) {
+    public static void create (Context ctx) throws SQLException {
         try {
             var name = ctx.formParamAsClass("name", String.class)
                     .check(value -> value.length() > 2, "Имя должно быть длиннее 2")
@@ -58,7 +59,7 @@ public class CoursesController {
     }
 
     // Форма редактирования курса
-    public static void editForm (Context ctx) {
+    public static void editForm (Context ctx) throws SQLException {
         var id = ctx.pathParamAsClass("id", Long.class).get();
         var course = CourseRepository.find(id)
                 .orElseThrow(() -> new NotFoundResponse("Entity with id = " + id + " not found"));
@@ -67,7 +68,7 @@ public class CoursesController {
     }
 
     // Обновление страницы курса
-    public static void update (Context ctx) {
+    public static void update (Context ctx) throws SQLException {
         var id = ctx.pathParamAsClass("id", Long.class).get();
         var name = ctx.formParam("name");
         var description = ctx.formParam("description");
@@ -80,7 +81,7 @@ public class CoursesController {
     }
 
     // Удаление курса
-    public static void destroy (Context ctx) {
+    public static void destroy (Context ctx) throws SQLException {
         var id = ctx.pathParamAsClass("id", Long.class).get();
         CourseRepository.delete(id);
         ctx.redirect(NamedRoutes.coursesPath());
