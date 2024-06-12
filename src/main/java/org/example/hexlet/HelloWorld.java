@@ -4,14 +4,10 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinJte;
-import io.javalin.validation.ValidationException;
 import org.example.hexlet.controller.CoursesController;
 import org.example.hexlet.controller.UsersController;
 import org.example.hexlet.dto.MainPage;
-import org.example.hexlet.dto.courses.BuildCoursePage;
-import org.example.hexlet.model.Course;
 import org.example.hexlet.repository.BaseRepository;
-import org.example.hexlet.repository.CourseRepository;
 import org.example.hexlet.util.NamedRoutes;
 import org.example.hexlet.controller.SessionsController;
 
@@ -40,7 +36,7 @@ public class HelloWorld {
 
         app.start(7070); // Стартуем веб-сервер
     }
-    
+
     private static void initApp() throws Exception {
         var hikariConfig = new HikariConfig();
         hikariConfig.setJdbcUrl("jdbc:h2:mem:hexlet_project;DB_CLOSE_DELAY=-1");

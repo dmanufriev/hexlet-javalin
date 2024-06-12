@@ -1,8 +1,6 @@
 package org.example.hexlet.repository;
 
-import org.example.hexlet.model.Course;
 import org.example.hexlet.model.User;
-
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -20,7 +18,7 @@ public class UserRepository extends BaseRepository {
             preparedStatement.setString(3, user.getPassword());
             preparedStatement.executeUpdate();
             var generatedKeys = preparedStatement.getGeneratedKeys();
-            if(generatedKeys.next()) {
+            if (generatedKeys.next()) {
                 user.setId(generatedKeys.getLong(1));
             } else {
                 throw new SQLException("DB have not returned an id after saving an entity");

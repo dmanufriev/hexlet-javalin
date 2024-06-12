@@ -30,7 +30,9 @@ public class NamedRoutes {
     public static String userPath(String id) {
         return "/users/" + id;
     }
-    public static String editUserPath(String id) { return userPath(id) + "/edit"; }
+    public static String editUserPath(String id) {
+        return userPath(id) + "/edit";
+    }
 
     // Courses
     public static String buildCoursePath() {
@@ -45,7 +47,9 @@ public class NamedRoutes {
     public static String coursePath(String id) {
         return "/courses/" + id;
     }
-    public static String editCoursePath(String id) { return coursePath(id) + "/edit"; }
+    public static String editCoursePath(String id) {
+        return coursePath(id) + "/edit";
+    }
 
     // Github
     public static String githubPath() {

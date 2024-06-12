@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public class CourseRepository extends BaseRepository {
 
-   public static void save(Course course) throws SQLException {
+    public static void save(Course course) throws SQLException {
         String sql = "INSERT INTO courses (name, description) VALUES (?, ?)";
         try (var conn = dataSource.getConnection();
             var preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -18,7 +18,7 @@ public class CourseRepository extends BaseRepository {
             preparedStatement.setString(2, course.getDescription());
             preparedStatement.executeUpdate();
             var generatedKeys = preparedStatement.getGeneratedKeys();
-            if(generatedKeys.next()) {
+            if (generatedKeys.next()) {
                 course.setId(generatedKeys.getLong(1));
             } else {
                 throw new SQLException("DB have not returned an id after saving an entity");

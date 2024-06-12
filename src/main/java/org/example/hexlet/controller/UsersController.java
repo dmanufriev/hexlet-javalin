@@ -16,7 +16,7 @@ import static io.javalin.rendering.template.TemplateUtil.model;
 
 public class UsersController {
     // Список пользователей
-    public static void index (Context ctx) throws SQLException {
+    public static void index(Context ctx) throws SQLException {
         var header = "Пользователи";
         var users = UserRepository.getEntities();
         var page = new UsersPage(users, header);
@@ -24,20 +24,20 @@ public class UsersController {
     }
 
     // Профиль пользователя
-    public static void show (Context ctx) throws SQLException {
+    public static void show(Context ctx) throws SQLException {
         var id = ctx.pathParamAsClass("id", Long.class).get();
         var user = UserRepository.find(id).get();
         ctx.render("users/show.jte", model("user", user));
     }
 
     // Форма создания нового пользователя
-    public static void buildForm (Context ctx) {
+    public static void buildForm(Context ctx) {
         var page = new BuildUserPage();
         ctx.render("users/build.jte", model("page", page));
     }
 
     // Создание нового пользователя
-    public static void create (Context ctx) throws SQLException {
+    public static void create(Context ctx) throws SQLException {
         var name = ctx.formParam("name").trim();
         var email = ctx.formParam("email").trim().toLowerCase();
         try {
@@ -56,7 +56,7 @@ public class UsersController {
     }
 
     // Форма редактирования профиля пользователя
-    public static void editForm (Context ctx) throws SQLException {
+    public static void editForm(Context ctx) throws SQLException {
         var id = ctx.pathParamAsClass("id", Long.class).get();
         var user = UserRepository.find(id)
                 .orElseThrow(() -> new NotFoundResponse("Entity with id = " + id + " not found"));
@@ -65,7 +65,7 @@ public class UsersController {
     }
 
     // Обновление профиля пользователя
-    public static void update (Context ctx) throws SQLException {
+    public static void update(Context ctx) throws SQLException {
         var id = ctx.pathParamAsClass("id", Long.class).get();
 
         var name = ctx.formParam("name");
@@ -82,7 +82,7 @@ public class UsersController {
     }
 
     // Удаление профиля пользователя
-    public static void destroy (Context ctx) throws SQLException {
+    public static void destroy(Context ctx) throws SQLException {
         var id = ctx.pathParamAsClass("id", Long.class).get();
         UserRepository.delete(id);
         ctx.redirect(NamedRoutes.usersPath());
